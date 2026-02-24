@@ -1,0 +1,59 @@
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-5">
+      <div class="card shadow">
+        <div class="card-body">
+
+          <h3 class="text-center mb-4">Register</h3>
+
+          <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+
+            <div class="mb-3">
+              <label for="email" class="form-label">Email</label>
+              <input class="form-control"
+                     formControlName="email"
+                     id="email"
+                     type="email"
+                     [class.is-invalid]="submitted && f.email.invalid" />
+                       @if (submitted && f.email.errors) {
+                <div class="invalid-feedback">
+                  @if (f.email.errors['required']) {
+                    Email is required.
+                  }
+                  @if (f.email.errors['email']) {
+                    Invalid email format.
+                  }
+                </div>
+              }
+            </div>
+
+            <div class="mb-3">
+              <label for="password" class="form-label">Password</label>
+              <input class="form-control"
+                     formControlName="password"
+                     id="password"
+                     type="password"
+                     [class.is-invalid]="submitted && f.password.invalid" />
+                            @if (submitted && f.password.errors) {
+                <div class="invalid-feedback">
+                  @if (f.password.errors['required']) {
+                    Password is required.
+                  }
+                  @if (f.password.errors['minlength']) {
+                    Minimum 6 characters required.
+                  }
+                </div>
+              }
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100" [disabled]="loading">
+              Register
+            </button>
+
+          </form>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
