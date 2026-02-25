@@ -1,15 +1,6 @@
-<app-navbar></app-navbar>
-<router-outlet></router-outlet>
 
-<div class="toast-container">
-  <ngb-toast *ngFor="let toast of toasts" [autohide]="true" [delay]="toast.delay || 3000" (hidden)="remove(toast)"
-    [ngClass]="{
-      'bg-success': toast.type === 'success',
-      'bg-danger': toast.type === 'error',
-      'bg-warning': toast.type === 'warning',
-      'bg-info': toast.type === 'info'
-    }">
-    <strong *ngIf="toast.header">{{ toast.header }}</strong>
-    <div>{{ toast.message }}</div>
-  </ngb-toast>
-</div>
+<app-navbar></app-navbar>
+<app-toast-container></app-toast-container>
+<main class="container mt-3">
+  <router-outlet></router-outlet>
+</main>

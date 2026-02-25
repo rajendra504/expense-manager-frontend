@@ -3,6 +3,7 @@ import { NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angula
 import { AuthService } from '../auth-service';
 import { CommonModule } from '@angular/common';
 import { ToastService } from '../../core/services/toast-service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -15,6 +16,8 @@ export class Login {
   private fb = inject(NonNullableFormBuilder);
   private toastService = inject(ToastService)
   private authService = inject(AuthService);
+  private router = inject(Router);
+
   loginForm = this.fb.group({
     email: ['',[Validators.required,Validators.email]],
     password: ['',[Validators.required,Validators.minLength(6)]]
@@ -27,7 +30,7 @@ export class Login {
     this.submitted=true;
 
     if(this.loginForm.invalid){
-      this.toastService.show('Please fill all required fields', 'warning', 'Warning');
+      this.toastService.warning("Please fill all required fields");
       return;
     }
     this.loading=true;
@@ -39,16 +42,17 @@ export class Login {
           const token = response.data.token;
           const role = response.data.role;
           this.authService.storeAuthData(token,role);
+          this.router.navigate(['/expenses']);
           console.log('Login successful');
           console.log(response);
           //this.toastService.show('Login successful!', 'success');
-          this.toastService.show(`Login successful! Welcome ${role}`, 'success','Success');
+          this.toastService.success("Login successful!");
         }
         this.loading=false;
       },
       error:(err)=>{
         console.log(err);
-        this.toastService.show(err.error.message || 'Login failed', 'error','Error');
+        //this.toastService.error(err.error.message || 'Login failed');
         this.loading=false;
       }
     });

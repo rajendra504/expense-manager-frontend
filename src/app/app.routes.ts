@@ -7,14 +7,14 @@ import { authGuard } from './core/guards/auth-guard';
 
 export const routes: Routes = [
   {
-    path:'',
+    path: '',
     loadChildren: () =>
       import('./auth/auth.routes').then(m => m.AUTH_ROUTES)
   },
   {
-    path:'expenses',
+    path: 'expenses',
     loadChildren: () =>
-      import('./expense/expense.routes').then(m => m.EXPENSE_ROUTES)
+      import('./features/expense/expense.routes').then(m => m.EXPENSE_ROUTES)
   },
   {
     path: 'admin',
@@ -23,7 +23,7 @@ export const routes: Routes = [
     canActivate: [authGuard, adminGuard]
   },
   {
-    path:'**',
-    redirectTo:'login'
+    path: '**',
+    redirectTo: 'login'
   }
 ];

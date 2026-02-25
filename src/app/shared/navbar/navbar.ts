@@ -22,6 +22,6 @@ export class Navbar {
     }
     logout():void{
       this.authService.logout();
-      this.toastService.show('You have been logged out.', 'info','Info');
+      this.toastService.info('You have been logged out.');
     }
 }

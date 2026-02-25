@@ -1,0 +1,13 @@
+<div class="toast-wrapper">
+  <ngb-toast *ngFor="let toast of toastService.toasts" [delay]="toast.delay ?? 4000" [autohide]="true"
+    (hidden)="toastService.remove(toast)" [ngClass]="getToastClass(toast.type)">
+    <div class="toast-header py-1 px-2">
+      <strong class="me-auto small">{{ toast.title }}</strong>
+    </div>
+
+    <div class="toast-body small py-2 px-2">
+      {{ toast.message }}
+    </div>
+
+  </ngb-toast>
+</div>

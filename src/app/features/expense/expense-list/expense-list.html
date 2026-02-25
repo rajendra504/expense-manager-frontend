@@ -1,0 +1,93 @@
+<div class="container mt-4">
+
+  <div class="row g-3 mb-4 align-items-end">
+
+    <div class="col-lg-4">
+      <div class="input-group">
+        <input type="text" class="form-control" [(ngModel)]="searchTerm" placeholder="Search by title...">
+        <button class="btn btn-primary" (click)="onSearch()">Search</button>
+      </div>
+    </div>
+
+    <div class="col-lg-8">
+      <form [formGroup]="filterForm" class="row g-2 align-items-center">
+
+        <div class="col-md-4">
+          <!-- <select formControlName="category" class="form-select" aria-label="category" >
+            <option value="">All Categories</option>
+            <option value="FOOD">Food</option>
+            <option value="TRAVEL">Travel</option>
+            <option value="SHOPPING">Shopping</option>
+          </select> -->
+          <select formControlName="category" class="form-select" aria-label="category">
+            <option value="">All Categories</option>
+            @for (category of categories; track category) {
+            <option [value]="category">{{ category }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="col-md-2">
+          <input type="number" placeholder="Min" formControlName="minAmount" class="form-control">
+        </div>
+
+        <div class="col-md-2">
+          <input type="number" placeholder="Max" formControlName="maxAmount" class="form-control">
+        </div>
+
+        <div class="col-md-4 d-flex gap-2">
+          <button type="button" class="btn btn-success flex-grow-1" (click)="applyFilters()">Apply</button>
+          <button type="button" class="btn btn-secondary flex-grow-1" (click)="resetFilters()">Reset</button>
+        </div>
+
+      </form>
+    </div>
+
+  </div>
+
+  <div class="table-responsive shadow-sm">
+    <table class="table table-bordered table-hover mb-0">
+      <thead class="table-light">
+        <tr>
+          <th (click)="onSort('title')" style="cursor:pointer" class="user-select-none">Title ↕</th>
+          <th (click)="onSort('amount')" style="cursor:pointer" class="user-select-none">Amount ↕</th>
+          <th (click)="onSort('category')" style="cursor:pointer" class="user-select-none">Category ↕</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (expense of expenses; track expense.id) {
+        <tr>
+          <td>{{ expense.title }}</td>
+          <td class="fw-bold">{{ expense.amount | currency:'INR' }}</td>
+          <td><span class="badge bg-info text-dark">{{ expense.category }}</span></td>
+        </tr>
+        } @empty {
+        <tr>
+          <td colspan="3" class="text-center py-4 text-muted">No expenses found matching your criteria.</td>
+        </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+
+  @if (totalPages > 1) {
+  <nav class="d-flex justify-content-center mt-4">
+    <ul class="pagination pagination-sm">
+      <li class="page-item" [class.disabled]="page === 0">
+        <button class="page-link" (click)="changePage(page - 1)">Previous</button>
+      </li>
+
+      @for (p of [].constructor(totalPages); track $index) {
+      <li class="page-item" [class.active]="$index === page">
+        <button class="page-link" (click)="changePage($index)">{{ $index + 1 }}</button>
+      </li>
+      }
+
+      <li class="page-item" [class.disabled]="page === totalPages - 1">
+        <button class="page-link" (click)="changePage(page + 1)">Next</button>
+      </li>
+    </ul>
+  </nav>
+  }
+
+</div>
