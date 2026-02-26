@@ -1,57 +1,54 @@
 <div class="container mt-4">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="fw-bold m-0 text-dark">Expenses</h2>
+    <button [routerLink]="['/expenses/add']" class="btn btn-primary px-4 shadow-sm">
+      <i class="bi bi-plus-lg"></i> Add Expense
+    </button>
+  </div>
 
-  <div class="row g-3 mb-4 align-items-end">
-
-    <div class="col-lg-4">
-      <div class="input-group">
-        <input type="text" class="form-control" [(ngModel)]="searchTerm" placeholder="Search by title...">
-        <button class="btn btn-primary" (click)="onSearch()">Search</button>
+  <div class="card border-0 shadow-sm bg-light mb-4">
+    <div class="card-body">
+      <div class="row g-3 align-items-end">
+        <div class="col-lg-4">
+          <div class="input-group input-group-sm">
+            <span class="input-group-text bg-white"><i class="bi bi-search"></i></span>
+            <input type="text" class="form-control" [(ngModel)]="searchTerm" placeholder="Search title...">
+            <button class="btn btn-primary" (click)="onSearch()">Search</button>
+          </div>
+        </div>
+        <div class="col-lg-8">
+          <form [formGroup]="filterForm" class="row g-2">
+            <div class="col-md-4">
+              <select id="category" aria-label="category" formControlName="category" class="form-select form-select-sm">
+                <option value="">All Categories</option>
+                @for (cat of categories; track cat) { <option [value]="cat">{{cat}}</option> }
+              </select>
+            </div>
+            <div class="col-md-2">
+              <input type="number" formControlName="minAmount" class="form-control form-select-sm" placeholder="Min">
+            </div>
+            <div class="col-md-2">
+              <input type="number" formControlName="maxAmount" class="form-control form-select-sm" placeholder="Max">
+            </div>
+            <div class="col-md-4 d-flex gap-2">
+              <button type="button" class="btn btn-sm btn-success w-100" (click)="applyFilters()">Apply</button>
+              <button type="button" class="btn btn-sm btn-outline-secondary w-100"
+                (click)="resetFilters()">Reset</button>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
-
-    <div class="col-lg-8">
-      <form [formGroup]="filterForm" class="row g-2 align-items-center">
-
-        <div class="col-md-4">
-          <!-- <select formControlName="category" class="form-select" aria-label="category" >
-            <option value="">All Categories</option>
-            <option value="FOOD">Food</option>
-            <option value="TRAVEL">Travel</option>
-            <option value="SHOPPING">Shopping</option>
-          </select> -->
-          <select formControlName="category" class="form-select" aria-label="category">
-            <option value="">All Categories</option>
-            @for (category of categories; track category) {
-            <option [value]="category">{{ category }}</option>
-            }
-          </select>
-        </div>
-
-        <div class="col-md-2">
-          <input type="number" placeholder="Min" formControlName="minAmount" class="form-control">
-        </div>
-
-        <div class="col-md-2">
-          <input type="number" placeholder="Max" formControlName="maxAmount" class="form-control">
-        </div>
-
-        <div class="col-md-4 d-flex gap-2">
-          <button type="button" class="btn btn-success flex-grow-1" (click)="applyFilters()">Apply</button>
-          <button type="button" class="btn btn-secondary flex-grow-1" (click)="resetFilters()">Reset</button>
-        </div>
-
-      </form>
-    </div>
-
   </div>
 
   <div class="table-responsive shadow-sm">
     <table class="table table-bordered table-hover mb-0">
-      <thead class="table-light">
+      <thead class="table-dark">
         <tr>
-          <th (click)="onSort('title')" style="cursor:pointer" class="user-select-none">Title ↕</th>
-          <th (click)="onSort('amount')" style="cursor:pointer" class="user-select-none">Amount ↕</th>
-          <th (click)="onSort('category')" style="cursor:pointer" class="user-select-none">Category ↕</th>
+          <th (click)="onSort('title')" style="cursor:pointer" class="user-select-none">Title </th>
+          <th (click)="onSort('amount')" style="cursor:pointer" class="user-select-none">Amount </th>
+          <th (click)="onSort('category')" style="cursor:pointer" class="user-select-none">Category </th>
+          <th style="cursor:pointer" class="user-select-none">Edit</th>
         </tr>
       </thead>
       <tbody>
@@ -60,6 +57,11 @@
           <td>{{ expense.title }}</td>
           <td class="fw-bold">{{ expense.amount | currency:'INR' }}</td>
           <td><span class="badge bg-info text-dark">{{ expense.category }}</span></td>
+          <td>
+            <button [routerLink]="['/expenses/edit', expense.id]" class="btn btn-sm btn-outline-primary">
+              Edit
+            </button>
+          </td>
         </tr>
         } @empty {
         <tr>
@@ -69,7 +71,6 @@
       </tbody>
     </table>
   </div>
-
   @if (totalPages > 1) {
   <nav class="d-flex justify-content-center mt-4">
     <ul class="pagination pagination-sm">
@@ -89,5 +90,4 @@
     </ul>
   </nav>
   }
-
 </div>
