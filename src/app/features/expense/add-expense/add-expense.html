@@ -1,0 +1,67 @@
+<form [formGroup]="addForm" (ngSubmit)="onSubmit()" class="container mt-4 p-4 shadow-sm rounded bg-white">
+  <h2 class="mb-4 text-primary">Add New Entry</h2>
+
+  <div class="row">
+    <div class="col-md-6 mb-3">
+      <label for="title" class="form-label fw-bold">Title</label>
+      <input type="text" formControlName="title" id="title" class="form-control"
+        [class.is-invalid]="submitted && f.title.errors" placeholder="e.g. Monthly Rent">
+
+      @if (submitted && f.title.errors) {
+      <div class="invalid-feedback">
+        @if (f.title.errors['required']) { <span>Title is required</span> }
+        @if (f.title.errors['minlength']) { <span>Min 3 characters</span> }
+      </div>
+      }
+    </div>
+
+    <div class="col-md-6 mb-3">
+      <label for="category" class="form-label fw-bold">Category</label>
+      <input type="text" formControlName="category" id="category" class="form-control"
+        [class.is-invalid]="submitted && f.category.errors" placeholder="e.g. Housing">
+
+      @if (submitted && f.category.errors) {
+      <div class="invalid-feedback">
+        @if (f.category.errors['required']) { <span>Category is required</span> }
+      </div>
+      }
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-4 mb-3">
+      <label for="amount" class="form-label fw-bold">Amount</label>
+      <div class="input-group">
+        <span class="input-group-text">$</span>
+        <input type="number" formControlName="amount" id="amount" class="form-control"
+          [class.is-invalid]="submitted && f.amount.errors">
+      </div>
+      @if (submitted && f.amount.errors) {
+      <div class="text-danger small mt-1">
+        @if (f.amount.errors['required']) { <span>Amount is required</span> }
+        @if (f.amount.errors['min']) { <span>Minimum value is 0</span> }
+      </div>
+      }
+    </div>
+
+    <div class="col-md-8 mb-3">
+      <label for="description" class="form-label fw-bold">Description (Optional)</label>
+      <input type="text" formControlName="description" id="description" class="form-control"
+        [class.is-invalid]="submitted && f.description.errors" placeholder="Short details...">
+      @if (submitted && f.description.errors) {
+      <div class="invalid-feedback">
+        @if (f.description.errors['minlength']) { <span>Min 6 characters</span> }
+      </div>
+      }
+    </div>
+  </div>
+
+  <div class="mt-4">
+    <button type="submit" class="btn btn-primary px-5 py-2 shadow-sm" [disabled]="loading">
+      @if (loading) {
+      <span class="spinner-border spinner-border-sm me-2"></span>
+      }
+      {{ loading ? 'Processing...' : 'Save Entry' }}
+    </button>
+  </div>
+</form>

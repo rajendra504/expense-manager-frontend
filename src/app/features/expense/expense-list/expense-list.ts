@@ -3,10 +3,11 @@ import { ExpenseService } from '../services/expense-service';
 import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ToastService } from '../../../core/services/toast-service';
 import { CommonModule } from '@angular/common';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-expense-list',
-  imports: [CommonModule,FormsModule,ReactiveFormsModule,],
+  imports: [CommonModule,FormsModule,ReactiveFormsModule,RouterLink],
   templateUrl: './expense-list.html',
   styleUrl: './expense-list.scss',
 })
@@ -19,7 +20,7 @@ export class ExpenseList implements OnInit{
   categories: string[] = [];
 
   page = 0;
-  size = 10;
+  size = 6;
   totalPages = 0;
   sort = 'id,desc';
 
