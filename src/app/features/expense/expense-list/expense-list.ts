@@ -1,13 +1,14 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { ExpenseService } from '../services/expense-service';
 import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ToastService } from '../../../core/services/toast-service';
 import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
+import { RouterLink, RouterModule } from '@angular/router';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-expense-list',
-  imports: [CommonModule,FormsModule,ReactiveFormsModule,RouterLink],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, RouterModule],
   templateUrl: './expense-list.html',
   styleUrl: './expense-list.scss',
 })
@@ -16,6 +17,11 @@ export class ExpenseList implements OnInit{
   private fb = inject(FormBuilder);
   private expenseService = inject(ExpenseService);
   private toastService = inject(ToastService);
+  private modalService = inject(NgbModal);
+
+  @ViewChild('deleteModal') deleteModal!: TemplateRef<any>;
+
+  selectedId!: number;
   expenses: any[] = [];
   categories: string[] = [];
 
@@ -100,6 +106,24 @@ export class ExpenseList implements OnInit{
     });
     this.searchTerm = '';
     this.loadExpenses();
+  }
+  openDeleteModal(id: number) {
+    this.selectedId = id;
+    this.modalService.open(this.deleteModal);
+  }
+
+  confirmDelete(modal: any) {
+    this.expenseService.deleteExpenseById(this.selectedId).subscribe({
+      next: () => {
+        this.toastService.success("Deleted successfully");
+        modal.close();
+        this.loadExpenses(); // ✅ HERE
+      },
+      error: () => this.toastService.error("Delete failed")
+    });
+  }
+  onDelete(id: number): void {
+    this.openDeleteModal(id);
   }
   // resetFilters() {
   //   this.filterForm.reset();

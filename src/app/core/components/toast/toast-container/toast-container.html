@@ -1,13 +1,14 @@
+<!-- toast-container.html -->
 <div class="toast-wrapper">
   <ngb-toast *ngFor="let toast of toastService.toasts" [delay]="toast.delay ?? 4000" [autohide]="true"
-    (hidden)="toastService.remove(toast)" [ngClass]="getToastClass(toast.type)">
-    <div class="toast-header py-1 px-2">
-      <strong class="me-auto small">{{ toast.title }}</strong>
+    (hidden)="toastService.remove(toast)" [ngClass]="getToastClass(toast.type)" class="em-toast">
+    <div class="toast-header">
+      <span class="toast-icon me-2">{{ getToastIcon(toast.type) }}</span>
+      <strong class="me-auto">{{ toast.title }}</strong>
+      <button type="button" class="toast-close" (click)="toastService.remove(toast)">✕</button>
     </div>
-
-    <div class="toast-body small py-2 px-2">
+    <div class="toast-body">
       {{ toast.message }}
     </div>
-
   </ngb-toast>
 </div>

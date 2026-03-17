@@ -1,0 +1,122 @@
+<div class="page-wrapper" style="padding: 2rem;">
+
+  <!-- Breadcrumb + Back -->
+  <div class="d-flex align-items-center gap-2 mb-4 em-fade-in-up" style="font-size: 13px; color: var(--text-muted);">
+    <a routerLink="/expenses" style="color: var(--text-muted); text-decoration: none; transition: color 0.2s;"
+      onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='var(--text-muted)'">
+      <i class="bi bi-grid-3x3-gap me-1"></i>Expenses
+    </a>
+    <span style="color: var(--border-subtle);">/</span>
+    <span style="color: var(--text-secondary);">View</span>
+  </div>
+
+  <!-- Page header -->
+  <div class="d-flex justify-content-between align-items-start mb-4 em-fade-in-up em-delay-1">
+    <div>
+      <div class="em-label mb-1">Read Only</div>
+      <h2 class="em-title" style="font-size: 22px; margin: 0;">Expense Detail</h2>
+    </div>
+    <div class="d-flex gap-2">
+      <button routerLink="/expenses" class="btn btn-outline-secondary btn-sm">
+        <i class="bi bi-arrow-left me-1"></i> Back
+      </button>
+      <button [routerLink]="['/expenses/edit', expense?.id]" class="btn btn-outline-primary btn-sm">
+        <i class="bi bi-pencil-square me-1"></i> Edit
+      </button>
+    </div>
+  </div>
+
+  <!-- Main card -->
+  <div class="em-card em-card-glow em-fade-in-up em-delay-2"
+    style="padding: 0; max-width: 860px; margin: 0 auto; overflow: hidden;">
+
+    <!-- Card top accent bar -->
+    <div
+      style="height: 3px; background: linear-gradient(90deg, transparent 0%, var(--gold) 40%, var(--accent-teal) 100%);">
+    </div>
+
+    <!-- Hero amount section -->
+    <div
+      style="padding: 2rem 2rem 1.5rem; border-bottom: 1px solid var(--border-subtle); background: rgba(201,168,76,0.04);">
+      <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
+        <div>
+          <div class="em-label mb-2">Total Amount</div>
+          <div
+            style="font-size: 38px; font-weight: 700; color: var(--gold-light); letter-spacing: -0.5px; line-height: 1;">
+            {{ expense?.amount | currency:'INR' }}
+          </div>
+        </div>
+        <span class="badge bg-info text-dark px-3 py-2" style="font-size: 13px; align-self: flex-start;">
+          {{ expense?.category }}
+        </span>
+      </div>
+    </div>
+
+    <!-- Fields grid -->
+    <div style="padding: 1.75rem 2rem;">
+      <div class="row g-4">
+
+        <!-- Title -->
+        <div class="col-12">
+          <div class="em-view-field">
+            <div class="em-label mb-1">
+              <i class="bi bi-tag me-1"></i>Title
+            </div>
+            <div class="em-view-value fs-5">{{ expense?.title }}</div>
+          </div>
+        </div>
+
+        <!-- Description -->
+        <div class="col-12">
+          <div class="em-view-field">
+            <div class="em-label mb-1">
+              <i class="bi bi-text-left me-1"></i>Description
+            </div>
+            <div class="em-view-value" style="color: var(--text-secondary); line-height: 1.7;">
+              {{ expense?.description || '—' }}
+            </div>
+          </div>
+        </div>
+
+        <!-- Date + Category side by side -->
+        <div class="col-md-6" *ngIf="expense?.date">
+          <div class="em-view-field">
+            <div class="em-label mb-1">
+              <i class="bi bi-calendar3 me-1"></i>Date
+            </div>
+            <div class="em-view-value">{{ expense?.date | date:'dd MMM yyyy' }}</div>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="em-view-field">
+            <div class="em-label mb-1">
+              <i class="bi bi-folder me-1"></i>Category
+            </div>
+            <div class="em-view-value">{{ expense?.category }}</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Footer divider + actions -->
+    <div style="padding: 1.25rem 2rem; border-top: 1px solid var(--border-subtle); background: rgba(255,255,255,0.02);">
+      <div class="d-flex justify-content-between align-items-center">
+        <span style="font-size: 12px; color: var(--text-muted); font-style: italic;">
+          <i class="bi bi-lock me-1"></i>View only — no changes will be saved
+        </span>
+        <div class="d-flex gap-2">
+          <button routerLink="/expenses" class="btn btn-outline-secondary btn-sm">
+            <i class="bi bi-arrow-left me-1"></i> Back
+          </button>
+          <button [routerLink]="['/expenses/edit', expense?.id]" class="btn btn-outline-primary btn-sm">
+            <i class="bi bi-pencil-square me-1"></i> Edit
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>

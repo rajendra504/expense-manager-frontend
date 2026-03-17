@@ -1,11 +1,11 @@
 import { Component, inject } from '@angular/core';
 import { AuthService } from '../auth-service';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-register',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, RouterModule],
   templateUrl: './register.html',
   styleUrl: './register.scss',
 })
@@ -33,7 +33,7 @@ export class Register {
     this.authService.register(request).subscribe({
       next:(response)=>{
         if(response.success){
-          alert('User Registration sucessfull, Please Login');
+          // alert('User Registration sucessfull, Please Login');
           console.log(response);
           this.router.navigate(['/login']);
         }

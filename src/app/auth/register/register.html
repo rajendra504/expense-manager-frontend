@@ -1,59 +1,62 @@
-<div class="container mt-5">
-  <div class="row justify-content-center">
-    <div class="col-md-5">
-      <div class="card shadow">
-        <div class="card-body">
+<!-- register.component.html -->
+<div class="page-wrapper d-flex align-items-center justify-content-center" style="min-height: 100vh; padding: 2rem;">
 
-          <h3 class="text-center mb-4">Register</h3>
+  <div class="em-card em-card-glow em-fade-in-up" style="width: 100%; max-width: 420px; padding: 2.5rem;">
 
-          <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
-
-            <div class="mb-3">
-              <label for="email" class="form-label">Email</label>
-              <input class="form-control"
-                     formControlName="email"
-                     id="email"
-                     type="email"
-                     [class.is-invalid]="submitted && f.email.invalid" />
-                       @if (submitted && f.email.errors) {
-                <div class="invalid-feedback">
-                  @if (f.email.errors['required']) {
-                    Email is required.
-                  }
-                  @if (f.email.errors['email']) {
-                    Invalid email format.
-                  }
-                </div>
-              }
-            </div>
-
-            <div class="mb-3">
-              <label for="password" class="form-label">Password</label>
-              <input class="form-control"
-                     formControlName="password"
-                     id="password"
-                     type="password"
-                     [class.is-invalid]="submitted && f.password.invalid" />
-                            @if (submitted && f.password.errors) {
-                <div class="invalid-feedback">
-                  @if (f.password.errors['required']) {
-                    Password is required.
-                  }
-                  @if (f.password.errors['minlength']) {
-                    Minimum 6 characters required.
-                  }
-                </div>
-              }
-            </div>
-
-            <button type="submit" class="btn btn-primary w-100" [disabled]="loading">
-              Register
-            </button>
-
-          </form>
-
-        </div>
+    <!-- Brand header -->
+    <div class="text-center mb-4">
+      <div class="em-label mb-2">Create Account</div>
+      <h2 class="em-title" style="font-size: 26px; margin: 0;">Expense Manager</h2>
+      <div class="em-label mb-2">TRACK · ANALYZE · GROW</div>
+      <div
+        style="width: 40px; height: 2px; background: linear-gradient(90deg, transparent, #c9a84c, transparent); margin: 12px auto 0;">
       </div>
     </div>
+
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+
+      <!-- Email -->
+      <div class="mb-3 em-fade-in-up em-delay-1">
+        <label for="email" class="form-label">Email</label>
+        <input class="form-control" formControlName="email" id="email" type="email" placeholder="you@expense.com"
+          [class.is-invalid]="submitted && f['email'].invalid" />
+        @if (submitted && f['email'].errors) {
+        <div class="invalid-feedback d-block" style="color: #e05c5c; font-size: 12px; margin-top: 4px;">
+          @if (f['email'].errors['required']) { Email is required. }
+          @if (f['email'].errors['email']) { Invalid email format. }
+        </div>
+        }
+      </div>
+
+      <!-- Password -->
+      <div class="mb-4 em-fade-in-up em-delay-2">
+        <label for="password" class="form-label">Password</label>
+        <input class="form-control" formControlName="password" id="password" type="password"
+          placeholder="Min. 6 characters" [class.is-invalid]="submitted && f['password'].invalid" />
+        @if (submitted && f['password'].errors) {
+        <div class="invalid-feedback d-block" style="color: #e05c5c; font-size: 12px; margin-top: 4px;">
+          @if (f['password'].errors['required']) { Password is required. }
+          @if (f['password'].errors['minlength']) { Minimum 6 characters required. }
+        </div>
+        }
+      </div>
+
+      <!-- Submit -->
+      <button type="submit" class="btn btn-primary w-100 em-fade-in-up em-delay-3" [disabled]="loading">
+        @if (loading) {
+        <span class="spinner-border spinner-border-sm me-2"
+          style="width: 14px; height: 14px; border-width: 2px;"></span>
+        }
+        Register
+      </button>
+
+    </form>
+
+    <!-- Footer link -->
+    <p class="text-center mt-4" style="font-size: 13px; color: rgba(255,255,255,0.35); margin: 0;">
+      Already have an account?
+      <a routerLink="/login" style="color: #c9a84c; text-decoration: none; font-weight: 500;">Login</a>
+    </p>
+
   </div>
 </div>

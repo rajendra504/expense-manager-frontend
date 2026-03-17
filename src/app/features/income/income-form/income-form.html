@@ -1,0 +1,101 @@
+<div class="page-wrapper" style="padding: 2rem;">
+
+  <!-- Breadcrumb -->
+  <div class="d-flex align-items-center gap-2 mb-4 em-fade-in-up" style="font-size: 13px; color: var(--text-muted);">
+    <a routerLink="/income" style="color: var(--text-muted); text-decoration: none;"
+      onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='var(--text-muted)'">
+      <i class="bi bi-cash-stack me-1"></i>Income
+    </a>
+    <span style="color: var(--border-subtle);">/</span>
+    <span style="color: var(--text-secondary);">{{ isEditMode ? 'Edit' : 'Add' }}</span>
+  </div>
+
+  <!-- Header -->
+  <div class="d-flex justify-content-between align-items-start mb-4 em-fade-in-up em-delay-1">
+    <div>
+      <div class="em-label mb-1">{{ isEditMode ? 'Update Record' : 'New Record' }}</div>
+      <h2 class="em-title" style="font-size: 22px; margin: 0;">{{ isEditMode ? 'Edit Income' : 'Add Income' }}</h2>
+    </div>
+    <button routerLink="/income" class="btn btn-outline-secondary btn-sm">
+      <i class="bi bi-arrow-left me-1"></i> Back
+    </button>
+  </div>
+
+  <!-- Form card -->
+  <div class="em-card em-card-glow em-fade-in-up em-delay-2"
+    style="padding: 0; max-width: 680px; margin: 0 auto; overflow: hidden;">
+
+    <div style="height: 3px; background: linear-gradient(90deg, transparent, var(--accent-teal), transparent);"></div>
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" style="padding: 2rem;">
+      <div class="row g-4">
+
+        <!-- Source -->
+        <div class="col-12">
+          <label class="form-label">Source <span style="color: var(--accent-red);">*</span></label>
+          <input type="text" formControlName="source" class="form-control"
+            [class.is-invalid]="form.get('source')?.invalid && form.get('source')?.touched"
+            placeholder="e.g. Salary, Freelance, Rent..." />
+          @if (form.get('source')?.invalid && form.get('source')?.touched) {
+          <div class="invalid-feedback"
+            style="display:block; color: var(--accent-red); font-size: 12px; margin-top: 4px;">
+            Source is required.
+          </div>
+          }
+        </div>
+
+        <!-- Amount -->
+        <div class="col-md-6">
+          <label class="form-label">Amount (₹) <span style="color: var(--accent-red);">*</span></label>
+          <div class="input-group">
+            <span class="input-group-text">₹</span>
+            <input type="number" formControlName="amount" class="form-control"
+              [class.is-invalid]="form.get('amount')?.invalid && form.get('amount')?.touched" placeholder="0.00"
+              min="0.01" step="0.01" />
+          </div>
+          @if (form.get('amount')?.invalid && form.get('amount')?.touched) {
+          <div style="color: var(--accent-red); font-size: 12px; margin-top: 4px;">
+            A valid amount is required.
+          </div>
+          }
+        </div>
+
+        <!-- Date -->
+        <div class="col-md-6">
+          <label class="form-label">Date <span style="color: var(--accent-red);">*</span></label>
+          <input type="date" aria-label="date" formControlName="date" class="form-control"
+            [class.is-invalid]="form.get('date')?.invalid && form.get('date')?.touched" />
+          @if (form.get('date')?.invalid && form.get('date')?.touched) {
+          <div style="color: var(--accent-red); font-size: 12px; margin-top: 4px;">
+            Date is required.
+          </div>
+          }
+        </div>
+
+        <!-- Description -->
+        <div class="col-12">
+          <label class="form-label">Description</label>
+          <textarea formControlName="description" class="form-control" rows="3" placeholder="Optional notes..."
+            maxlength="500"></textarea>
+          <div style="text-align: right; font-size: 11px; color: var(--text-muted); margin-top: 4px;">
+            {{ form.get('description')?.value?.length ?? 0 }}/500
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Actions -->
+      <div style="height: 1px; background: var(--border-subtle); margin: 1.5rem 0;"></div>
+      <div class="d-flex gap-2 justify-content-end">
+        <button type="button" routerLink="/income" class="btn btn-outline-secondary">Cancel</button>
+        <button type="submit" class="btn btn-primary px-4" [disabled]="isSubmitting">
+          @if (isSubmitting) {
+          <span class="spinner-border spinner-border-sm me-2"></span>
+          }
+          {{ isEditMode ? 'Update Income' : 'Add Income' }}
+        </button>
+      </div>
+
+    </form>
+  </div>
+</div>

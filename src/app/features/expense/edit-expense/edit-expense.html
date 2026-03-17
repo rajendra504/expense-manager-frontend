@@ -1,67 +1,106 @@
-<form [formGroup]="editForm" (ngSubmit)="onSubmit()" class="container mt-4 p-4 shadow-sm rounded bg-white">
-  <h2 class="mb-4 text-primary">Edit Expense</h2>
+<!-- edit-expense.component.html -->
+<div class="page-wrapper" style="padding: 2rem;">
 
-  <div class="row">
-    <div class="col-md-6 mb-3">
-      <label for="title" class="form-label fw-bold">Title</label>
-      <input type="text" formControlName="title" id="title" class="form-control"
-        [class.is-invalid]="submitted && f.title.errors" placeholder="e.g. Monthly Rent">
+  <form [formGroup]="editForm" (ngSubmit)="onSubmit()">
 
-      @if (submitted && f.title.errors) {
-      <div class="invalid-feedback">
-        @if (f.title.errors['required']) { <span>Title is required</span> }
-        @if (f.title.errors['minlength']) { <span>Min 3 characters</span> }
+    <!-- Page header -->
+    <div class="d-flex align-items-center gap-3 mb-4 em-fade-in-up">
+      <button type="button" class="btn btn-outline-secondary btn-sm" routerLink="/expenses"
+        style="padding: 6px 14px; font-size: 12px;">
+        <i class="bi bi-arrow-left me-1"></i> Back
+      </button>
+      <div>
+        <div class="em-label mb-0">Modify Record</div>
+        <h2 class="em-title" style="font-size: 22px; margin: 0;">Edit Expense</h2>
       </div>
-      }
     </div>
 
-    <div class="col-md-6 mb-3">
-      <label for="category" class="form-label fw-bold">Category</label>
-      <input type="text" formControlName="category" id="category" class="form-control"
-        [class.is-invalid]="submitted && f.category.errors" placeholder="e.g. Housing">
+    <!-- Centered card — uses full width, max 900px, centered with auto margins -->
+    <div class="em-card em-card-glow em-fade-in-up em-delay-1"
+      style="padding: 2rem; width: 100%; max-width: 900px; margin: 0 auto;">
 
-      @if (submitted && f.category.errors) {
-      <div class="invalid-feedback">
-        @if (f.category.errors['required']) { <span>Category is required</span> }
+      <div class="row g-3">
+
+        <!-- Title -->
+        <div class="col-md-6">
+          <label for="title" class="form-label">Title</label>
+          <input type="text" formControlName="title" id="title" class="form-control" placeholder="e.g. Monthly Rent"
+            [class.is-invalid]="submitted && f['title'].errors" />
+          @if (submitted && f['title'].errors) {
+          <div style="color: #e05c5c; font-size: 12px; margin-top: 4px;">
+            @if (f['title'].errors['required']) { <span>Title is required</span> }
+            @if (f['title'].errors['minlength']) { <span>Min 3 characters</span> }
+          </div>
+          }
+        </div>
+
+        <!-- Category -->
+        <div class="col-md-6">
+          <label for="category" class="form-label">Category</label>
+          <input type="text" formControlName="category" id="category" class="form-control" placeholder="e.g. Housing"
+            [class.is-invalid]="submitted && f['category'].errors" />
+          @if (submitted && f['category'].errors) {
+          <div style="color: #e05c5c; font-size: 12px; margin-top: 4px;">
+            @if (f['category'].errors['required']) { <span>Category is required</span> }
+          </div>
+          }
+        </div>
+
+        <!-- Amount -->
+        <div class="col-md-4">
+          <label for="amount" class="form-label">Amount</label>
+          <div class="input-group">
+            <span class="input-group-text">₹</span>
+            <input type="number" formControlName="amount" id="amount" class="form-control"
+              [class.is-invalid]="submitted && f['amount'].errors" />
+          </div>
+          @if (submitted && f['amount'].errors) {
+          <div style="color: #e05c5c; font-size: 12px; margin-top: 4px;">
+            @if (f['amount'].errors['required']) { <span>Amount is required</span> }
+            @if (f['amount'].errors['min']) { <span>Minimum value is 0</span> }
+          </div>
+          }
+        </div>
+
+        <!-- Description -->
+        <div class="col-md-8">
+          <label for="description" class="form-label">
+            Description
+            <span
+              style="color: var(--text-muted); font-size: 11px; font-weight: 400; margin-left: 4px;">(Optional)</span>
+          </label>
+          <input type="text" formControlName="description" id="description" class="form-control"
+            placeholder="Short details..." [class.is-invalid]="submitted && f['description'].errors" />
+          @if (submitted && f['description'].errors) {
+          <div style="color: #e05c5c; font-size: 12px; margin-top: 4px;">
+            @if (f['description'].errors['minlength']) { <span>Min 6 characters</span> }
+          </div>
+          }
+        </div>
+
       </div>
-      }
+
+      <!-- Divider -->
+      <div style="height: 1px; background: var(--border-subtle); margin: 1.5rem 0;"></div>
+
+      <!-- Actions -->
+      <div class="d-flex gap-3 align-items-center">
+        <button type="submit" class="btn btn-primary px-5" style="padding-top: 0.65rem; padding-bottom: 0.65rem;"
+          [disabled]="loading">
+          @if (loading) {
+          <span class="spinner-border spinner-border-sm me-2"
+            style="width: 14px; height: 14px; border-width: 2px;"></span>
+          }
+          {{ loading ? 'Processing...' : 'Save Entry' }}
+        </button>
+        <button type="button" class="btn btn-outline-secondary" routerLink="/expenses"
+          style="padding: 0.65rem 1.25rem;">
+          Cancel
+        </button>
+      </div>
+
     </div>
-  </div>
 
-  <div class="row">
-    <div class="col-md-4 mb-3">
-      <label for="amount" class="form-label fw-bold">Amount</label>
-      <div class="input-group">
-        <span class="input-group-text">$</span>
-        <input type="number" formControlName="amount" id="amount" class="form-control"
-          [class.is-invalid]="submitted && f.amount.errors">
-      </div>
-      @if (submitted && f.amount.errors) {
-      <div class="text-danger small mt-1">
-        @if (f.amount.errors['required']) { <span>Amount is required</span> }
-        @if (f.amount.errors['min']) { <span>Minimum value is 0</span> }
-      </div>
-      }
-    </div>
+  </form>
 
-    <div class="col-md-8 mb-3">
-      <label for="description" class="form-label fw-bold">Description (Optional)</label>
-      <input type="text" formControlName="description" id="description" class="form-control"
-        [class.is-invalid]="submitted && f.description.errors" placeholder="Short details...">
-      @if (submitted && f.description.errors) {
-      <div class="invalid-feedback">
-        @if (f.description.errors['minlength']) { <span>Min 6 characters</span> }
-      </div>
-      }
-    </div>
-  </div>
-
-  <div class="mt-4">
-    <button type="submit" class="btn btn-primary px-5 py-2 shadow-sm" [disabled]="loading">
-      @if (loading) {
-      <span class="spinner-border spinner-border-sm me-2"></span>
-      }
-      {{ loading ? 'Processing...' : 'Save Entry' }}
-    </button>
-  </div>
-</form>
+</div>

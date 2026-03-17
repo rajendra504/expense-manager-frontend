@@ -2,12 +2,12 @@ import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ToastService } from '../../../core/services/toast-service';
 import { ExpenseService } from '../services/expense-service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { ExpenseRequest } from '../expense';
 
 @Component({
   selector: 'app-edit-expense',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, RouterModule],
   templateUrl: './edit-expense.html',
   styleUrl: './edit-expense.scss',
 })

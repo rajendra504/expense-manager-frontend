@@ -20,5 +20,11 @@ export const EXPENSE_ROUTES: Routes = [
     loadComponent: () =>
       import('./edit-expense/edit-expense').then(m => m.EditExpense),
     canActivate: [authGuard]
+  },
+  {
+    path: 'view/:id',
+    loadComponent: () =>
+      import('./view-expense/view-expense').then(m => m.ViewExpense),
+    canActivate: [authGuard]
   }
 ];

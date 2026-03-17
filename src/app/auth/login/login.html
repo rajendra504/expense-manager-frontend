@@ -1,76 +1,63 @@
-<div class="container mt-5">
-  <div class="row justify-content-center">
-    <div class="col-md-5">
+<!-- login.component.html — updated for cinematic dark theme -->
+<div class="page-wrapper d-flex align-items-center justify-content-center" style="min-height: 100vh; padding: 2rem;">
 
-      <div class="card shadow">
-        <div class="card-body">
+  <div class="em-card em-card-glow em-fade-in-up" style="width: 100%; max-width: 420px; padding: 2.5rem;">
 
-          <h3 class="text-center mb-4">Login</h3>
-          
-          <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+    <!-- Brand header -->
+    <div class="text-center mb-4">
+      <div class="em-label mb-2">Welcome back</div>
+      <h2 class="em-title" style="font-size: 26px; margin: 0;">Expense Manager</h2>
+      <div class="em-label mb-2">TRACK · ANALYZE · GROW</div>
+      <div
+        style="width: 40px; height: 2px; background: linear-gradient(90deg, transparent, #c9a84c, transparent); margin: 12px auto 0;">
+      </div>
+    </div>
 
-            <!-- Email -->
-            <div class="mb-3">
-              <label for="email" class="form-label">Email</label>
-              <input
-                id="email"
-                type="email"
-                class="form-control"
-                formControlName="email"
-                [class.is-invalid]="submitted && f.email.invalid"
-              />
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
 
-              @if (submitted && f.email.errors) {
-                <div class="invalid-feedback">
-                  @if (f.email.errors['required']) {
-                    Email is required.
-                  }
-                  @if (f.email.errors['email']) {
-                    Invalid email format.
-                  }
-                </div>
-              }
-            </div>
-
-            <!-- Password -->
-            <div class="mb-3">
-              <label for="password" class="form-label">Password</label>
-              <input
-                id="password"
-                type="password"
-                class="form-control"
-                formControlName="password"
-                [class.is-invalid]="submitted && f.password.invalid"
-              />
-
-              @if (submitted && f.password.errors) {
-                <div class="invalid-feedback">
-                  @if (f.password.errors['required']) {
-                    Password is required.
-                  }
-                  @if (f.password.errors['minlength']) {
-                    Minimum 6 characters required.
-                  }
-                </div>
-              }
-            </div>
-
-            <button
-              type="submit"
-              class="btn btn-primary w-100"
-              [disabled]="loading"
-            >
-              @if (loading) {
-                <span class="spinner-border spinner-border-sm me-2"></span>
-              }
-              Login
-            </button>
-
-          </form>
-
+      <!-- Email -->
+      <div class="mb-3 em-fade-in-up em-delay-1">
+        <label for="email" class="form-label">Email</label>
+        <input id="email" type="email" class="form-control" placeholder="you@expense.com" formControlName="email"
+          [class.is-invalid]="submitted && f['email'].invalid" />
+        @if (submitted && f['email'].errors) {
+        <div class="invalid-feedback d-block" style="color: #e05c5c; font-size: 12px; margin-top: 4px;">
+          @if (f['email'].errors['required']) { Email is required. }
+          @if (f['email'].errors['email']) { Invalid email format. }
         </div>
+        }
       </div>
 
-    </div>
+      <!-- Password -->
+      <div class="mb-4 em-fade-in-up em-delay-2">
+        <label for="password" class="form-label">Password</label>
+        <input id="password" type="password" class="form-control" placeholder="Min. 6 characters"
+          formControlName="password" [class.is-invalid]="submitted && f['password'].invalid" />
+        @if (submitted && f['password'].errors) {
+        <div class="invalid-feedback d-block" style="color: #e05c5c; font-size: 12px; margin-top: 4px;">
+          @if (f['password'].errors['required']) { Password is required. }
+          @if (f['password'].errors['minlength']) { Minimum 6 characters required. }
+        </div>
+        }
+      </div>
+
+      <!-- Submit -->
+      <button type="submit" class="btn btn-primary w-100 em-fade-in-up em-delay-3" [disabled]="loading">
+        @if (loading) {
+        <span class="spinner-border spinner-border-sm me-2"
+          style="width: 14px; height: 14px; border-width: 2px;"></span>
+        }
+        Login
+      </button>
+    </form>
+
+    <!-- Footer link to register -->
+    <p class="text-center mt-4" style="font-size: 13px; color: rgba(255,255,255,0.35); margin: 0;">
+      Don't have an account?
+      <a routerLink="/register" style="color: #c9a84c; text-decoration: none; font-weight: 500;">
+        Register
+      </a>
+    </p>
+
   </div>
 </div>

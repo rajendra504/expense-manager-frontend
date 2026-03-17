@@ -3,11 +3,11 @@ import { NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angula
 import { AuthService } from '../auth-service';
 import { CommonModule } from '@angular/common';
 import { ToastService } from '../../core/services/toast-service';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-login',
-  imports: [CommonModule,ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, RouterModule],
   templateUrl: './login.html',
   styleUrl: './login.scss',
 })
@@ -42,7 +42,7 @@ export class Login {
           const token = response.data.token;
           const role = response.data.role;
           this.authService.storeAuthData(token,role);
-          this.router.navigate(['/expenses']);
+          this.router.navigate(['/dashboard']);
           console.log('Login successful');
           console.log(response);
           //this.toastService.show('Login successful!', 'success');

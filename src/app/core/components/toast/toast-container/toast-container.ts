@@ -1,3 +1,4 @@
+// toast-container.ts
 import { Component } from '@angular/core';
 import { ToastService } from '../../../services/toast-service';
 import { ToastType } from '../toast';
@@ -15,16 +16,21 @@ export class ToastContainer {
 
   getToastClass(type: ToastType): string {
     switch (type) {
-      case ToastType.SUCCESS:
-        return 'bg-success text-white';
-      case ToastType.ERROR:
-        return 'bg-danger text-white';
-      case ToastType.WARNING:
-        return 'bg-warning text-dark';
-      case ToastType.INFO:
-        return 'bg-info text-dark';
-      default:
-        return '';
+      case ToastType.SUCCESS: return 'toast-success';
+      case ToastType.ERROR: return 'toast-error';
+      case ToastType.WARNING: return 'toast-warning';
+      case ToastType.INFO: return 'toast-info';
+      default: return '';
+    }
+  }
+
+  getToastIcon(type: ToastType): string {
+    switch (type) {
+      case ToastType.SUCCESS: return '✓';
+      case ToastType.ERROR: return '✕';
+      case ToastType.WARNING: return '⚠';
+      case ToastType.INFO: return 'i';
+      default: return '';
     }
   }
 }

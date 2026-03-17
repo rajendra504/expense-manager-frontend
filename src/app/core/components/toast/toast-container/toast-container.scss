@@ -1,11 +1,120 @@
+// toast-container.scss
+
 .toast-wrapper {
   position: fixed;
-  min-width: 200px;
-  max-width: 250px;
-  top: 4rem;
-  right: 2rem;
+  top: 1.25rem;
+  right: 1.5rem;
   z-index: 9999;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 8px;
+  min-width: 260px;
+  max-width: 320px;
+}
+
+// Base toast — dark glass, compact
+.em-toast {
+  border-radius: 10px !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  background: #0d1526 !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255,255,255,0.05) !important;
+  overflow: hidden;
+  font-family: 'Inter', sans-serif;
+
+  // Thin colored accent bar on the left
+  border-left-width: 3px !important;
+
+  // Slide-in animation
+  animation: toastSlideIn 0.28s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+
+  .toast-header {
+    background: transparent !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.07) !important;
+    padding: 8px 12px !important;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+
+    strong {
+      font-size: 13px !important;
+      font-weight: 600 !important;
+      letter-spacing: 0.2px;
+      color: #f0ece0;
+    }
+
+    .toast-icon {
+      font-size: 13px;
+      line-height: 1;
+    }
+
+    .toast-close {
+      background: transparent;
+      border: none;
+      color: rgba(255, 255, 255, 0.3);
+      font-size: 11px;
+      cursor: pointer;
+      padding: 0;
+      line-height: 1;
+      margin-left: 8px;
+      transition: color 0.15s;
+
+      &:hover {
+        color: rgba(255, 255, 255, 0.7);
+      }
+    }
+  }
+
+  .toast-body {
+    padding: 8px 12px !important;
+    font-size: 12px !important;
+    line-height: 1.5;
+    color: rgba(255, 255, 255, 0.55) !important;
+    background: transparent !important;
+  }
+}
+
+// --- Type variants ---
+
+// Success — teal left bar
+.em-toast.toast-success {
+  border-left-color: #2dd4a0 !important;
+
+  .toast-header strong { color: #2dd4a0; }
+  .toast-icon          { color: #2dd4a0; }
+}
+
+// Error — red left bar
+.em-toast.toast-error {
+  border-left-color: #e05c5c !important;
+
+  .toast-header strong { color: #e05c5c; }
+  .toast-icon          { color: #e05c5c; }
+}
+
+// Warning — gold left bar (matches app's gold theme)
+.em-toast.toast-warning {
+  border-left-color: #c9a84c !important;
+
+  .toast-header strong { color: #e8d5a3; }
+  .toast-icon          { color: #c9a84c; }
+}
+
+// Info — blue left bar
+.em-toast.toast-info {
+  border-left-color: #5b8fd4 !important;
+
+  .toast-header strong { color: #85b7eb; }
+  .toast-icon          { color: #5b8fd4; }
+}
+
+// Slide-in from right
+@keyframes toastSlideIn {
+  from {
+    opacity: 0;
+    transform: translateX(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
