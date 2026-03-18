@@ -3,6 +3,7 @@ import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ApiResponse } from '../../../core/models/api-response';
 import { ExpenseFilter, ExpenseRequest, ExpenseResponse, Page } from '../expense';
+import { environment } from '../../../../environments/environment.prod';
 
 @Injectable({
   providedIn: 'root',
@@ -10,7 +11,8 @@ import { ExpenseFilter, ExpenseRequest, ExpenseResponse, Page } from '../expense
 export class ExpenseService {
 
   private http = inject(HttpClient);
-  private readonly BASE_URL = 'http://localhost:8080/api/v1/expenses'
+  // private readonly BASE_URL = 'http://localhost:8080/api/v1/expenses'
+  private readonly BASE_URL = `${environment.apiUrl}/api/v1/expenses`;
 
   // getAllExpenses():Observable<ApiResponse<ExpenseResponse>>{
   //  return this.http.get<ApiResponse<ExpenseResponse>>(this.BASE_URL);

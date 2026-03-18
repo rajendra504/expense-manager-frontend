@@ -6,6 +6,7 @@ import { ApiResponse } from '../core/models/api-response';
 import { LoginResponse } from '../core/models/login-response';
 import { RegisterRequest } from '../core/models/register-request';
 import { RegisterResponse } from '../core/models/register-response';
+import { environment } from '../../environments/environment.prod';
 
 @Injectable({
   providedIn: 'root',
@@ -14,7 +15,8 @@ export class AuthService {
 
   private http = inject(HttpClient);
 
-  private readonly BASE_URL = 'http://localhost:8080/auth';
+  // private readonly BASE_URL = 'http://localhost:8080/auth';
+  private readonly BASE_URL = `${environment.apiUrl}/auth`;
   private readonly TOKEN_KEY = 'auth_token';
   private readonly ROLE_KEY = 'user_role';
 

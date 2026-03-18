@@ -3,13 +3,15 @@ import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ApiResponse } from '../../../core/models/api-response';
 import { FinancialSummaryResponse, IncomeRequest, IncomeResponse, MonthlySummaryResponse, Page } from '../income.model';
+import { environment } from '../../../../environments/environment.prod';
 
 
 @Injectable({ providedIn: 'root' })
 export class IncomeService {
 
   private http = inject(HttpClient);
-  private readonly BASE_URL = 'http://localhost:8080/api/v1/income';
+  // private readonly BASE_URL = 'http://localhost:8080/api/v1/income';
+  private readonly BASE_URL = `${environment.apiUrl}/api/v1/income`;
 
   getAll(params: any): Observable<ApiResponse<Page<IncomeResponse>>> {
     return this.http.get<ApiResponse<Page<IncomeResponse>>>(this.BASE_URL, { params });
