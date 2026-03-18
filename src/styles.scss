@@ -1,7 +1,5 @@
 /* ============================================================
-   EXPENSE MANAGER — styles.scss  (v5 — SCSS native)
-   This IS your styles.scss. Replace the entire file with this.
-   No separate imports needed — everything is here.
+   EXPENSE MANAGER — styles.scss  (v6 — mobile responsive)
    ============================================================ */
 
 @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Inter:wght@300;400;500;600&display=swap');
@@ -46,18 +44,14 @@ body {
   overflow-x: hidden;
 }
 
-// CRITICAL for particles — app-root must be a block so the
-// canvas inserted before it sits directly under body
 app-root {
   display: block;
   min-height: 100vh;
   position: relative;
-  z-index: 2; // sits above the canvas (z-index 1) and body pseudo-elements (z-index 0)
+  z-index: 2;
 }
 
-// ── Background layers (pseudo-elements on body) ───────────────
-// z-index 0 — behind the particle canvas at z-index 1
-
+// ── Background layers ─────────────────────────────────────────
 body::before {
   content: '';
   position: fixed;
@@ -83,8 +77,7 @@ body::after {
   background-size: 48px 48px;
 }
 
-// ── Particle canvas injected by ParticlesService ──────────────
-// z-index 1 — above body pseudo-elements, below app-root content
+// ── Particle canvas ───────────────────────────────────────────
 #em-particles {
   position: fixed !important;
   top: 0 !important;
@@ -469,10 +462,7 @@ table.table tbody td {
 .em-delay-3    { animation-delay: 0.24s; opacity: 0; }
 .em-delay-4    { animation-delay: 0.32s; opacity: 0; }
 
-// ── Toast (ngb-toast overrides) ───────────────────────────────
-// ngb renders toasts outside component scope so these must
-// live here in the global file to reliably take effect.
-
+// ── Toast ─────────────────────────────────────────────────────
 ngb-toast,
 .toast {
   background-color: #0d1526 !important;
@@ -498,7 +488,6 @@ ngb-toast,
     padding: 8px 12px !important;
   }
 
-  // Nuke Bootstrap's bg-* color overrides
   &.bg-success,
   &.bg-danger,
   &.bg-warning,
@@ -507,7 +496,6 @@ ngb-toast,
     color: var(--text-primary) !important;
   }
 
-  // Type variants via left border accent
   &.toast-success {
     border-left: 3px solid #2dd4a0 !important;
     .toast-header strong { color: #2dd4a0; }
@@ -531,12 +519,9 @@ ngb-toast,
     .toast-header strong { color: #85b7eb; }
     .toast-icon          { color: #5b8fd4; }
   }
-
 }
-// ── Modal overrides ───────────────────────────────────────────
-// Bootstrap renders modals outside component scope, so these
-// must live in the global file.
 
+// ── Modal overrides ───────────────────────────────────────────
 .modal-backdrop {
   background-color: rgba(0, 0, 0, 0.7) !important;
 }
@@ -559,9 +544,6 @@ ngb-toast,
   color: var(--text-primary) !important;
 }
 
-// Fix: .btn-outline-secondary was rendering with a near-invisible
-// text color inside modals due to Bootstrap's modal color context.
-// This re-applies the theme's definition explicitly inside modals.
 .modal .btn.btn-outline-secondary {
   background: transparent !important;
   color: var(--text-secondary) !important;
@@ -589,8 +571,8 @@ ngb-toast,
     background: rgba(224, 92, 92, 0.28) !important;
   }
 }
-// ── Table action buttons ──────────────────────────────────────
 
+// ── Table action buttons ──────────────────────────────────────
 .em-action-btn {
   width: 30px;
   height: 30px;
@@ -625,8 +607,8 @@ ngb-toast,
     color: #ff8080 !important;
   }
 }
-// ── View field (read-only detail rows) ───────────────────────
 
+// ── View field ────────────────────────────────────────────────
 .em-view-field {
   padding: 0.75rem 1rem;
   background: rgba(255, 255, 255, 0.03);
@@ -643,4 +625,267 @@ ngb-toast,
   color: var(--text-primary);
   font-size: 15px;
   font-weight: 500;
+}
+
+// ── Delete modal ──────────────────────────────────────────────
+.em-delete-modal {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: 16px;
+  padding: 1.8rem;
+  box-shadow:
+    0 0 48px rgba(201, 168, 76, 0.09),
+    0 8px 32px rgba(0, 0, 0, 0.55);
+  position: relative;
+  overflow: hidden;
+}
+
+// ── Danger button ─────────────────────────────────────────────
+.btn.btn-danger-em {
+  background: rgba(224, 92, 92, 0.18) !important;
+  color: var(--accent-red) !important;
+  border: 1px solid rgba(224, 92, 92, 0.35) !important;
+  border-radius: 8px !important;
+  font-weight: 600 !important;
+  font-size: 13px !important;
+  transition: background 0.2s, box-shadow 0.2s !important;
+
+  &:hover {
+    background: rgba(224, 92, 92, 0.28) !important;
+    box-shadow: 0 4px 16px rgba(224, 92, 92, 0.2) !important;
+    color: #ff8080 !important;
+  }
+}
+
+// ╔══════════════════════════════════════════════════════════════╗
+// ║                  MOBILE RESPONSIVENESS                       ║
+// ╚══════════════════════════════════════════════════════════════╝
+
+@media (max-width: 768px) {
+
+  // ── Page padding ───────────────────────────────────────────
+  .page-wrapper {
+    padding: 1rem !important;
+  }
+
+  // ── Cards ──────────────────────────────────────────────────
+  .em-card,
+  .em-filter-card {
+    padding: 1rem !important;
+    border-radius: 12px !important;
+  }
+
+  .em-stat-card {
+    padding: 1rem !important;
+    border-radius: 10px !important;
+  }
+
+  // ── Typography ─────────────────────────────────────────────
+  .em-title {
+    font-size: 18px !important;
+  }
+
+  .em-stat-value {
+    font-size: 20px !important;
+  }
+
+  // ── Page header row — stack vertically ─────────────────────
+  .page-wrapper > div.d-flex.justify-content-between,
+  .page-wrapper > form > div.d-flex.justify-content-between {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 0.75rem !important;
+  }
+
+  // Add expense button full width on mobile
+  .page-wrapper > div.d-flex.justify-content-between .btn {
+    width: 100% !important;
+    text-align: center;
+  }
+
+  // ── Filter card — stack all inputs ─────────────────────────
+  .em-filter-card .col-lg-4,
+  .em-filter-card .col-lg-8 {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  .em-filter-card .col-md-4,
+  .em-filter-card .col-md-2 {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  .em-filter-card .col-md-4.d-flex {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  // ── Table ──────────────────────────────────────────────────
+  .table-responsive {
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch;
+    border-radius: 10px !important;
+  }
+
+  .table thead th,
+  .table thead.table-dark th {
+    font-size: 10px !important;
+    padding: 10px 10px !important;
+    letter-spacing: 1px !important;
+    white-space: nowrap;
+  }
+
+  .table tbody td {
+    font-size: 12px !important;
+    padding: 10px 10px !important;
+    white-space: nowrap;
+  }
+
+  // ── Action buttons ─────────────────────────────────────────
+  .em-action-btn {
+    width: 26px !important;
+    height: 26px !important;
+    font-size: 11px !important;
+  }
+
+  // ── Form pages (add/edit) ──────────────────────────────────
+  .em-card .col-md-6,
+  .em-card .col-md-4,
+  .em-card .col-md-8 {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  // ── Auth pages (login/register) ────────────────────────────
+  .page-wrapper.d-flex.align-items-center {
+    padding: 1rem !important;
+    align-items: flex-start !important;
+    padding-top: 2rem !important;
+  }
+
+  .page-wrapper .em-card.em-card-glow {
+    max-width: 100% !important;
+    width: 100% !important;
+    padding: 1.5rem !important;
+  }
+
+  // ── View pages ─────────────────────────────────────────────
+  .em-view-field {
+    padding: 0.6rem 0.75rem !important;
+  }
+
+  .em-view-value {
+    font-size: 14px !important;
+  }
+
+  // Hero amount on view pages
+  .em-card [style*="font-size: 38px"],
+  .em-card [style*="font-size:38px"] {
+    font-size: 26px !important;
+  }
+
+  // View page header buttons — stack
+  .em-card ~ div .d-flex.gap-2,
+  div.d-flex.justify-content-between .d-flex.gap-2 {
+    flex-wrap: wrap;
+  }
+
+  // ── Dashboard ──────────────────────────────────────────────
+  // Stat cards — 2 per row
+  .row.g-3 > .col-md-4 {
+    width: 50% !important;
+    max-width: 50% !important;
+  }
+
+  // Charts — full width
+  .row.g-3 > .col-lg-4,
+  .row.g-3 > .col-lg-8 {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  canvas {
+    max-height: 220px !important;
+  }
+
+  // Monthly chart toggle buttons
+  .d-flex.gap-2 .btn-sm {
+    padding: 4px 10px !important;
+    font-size: 11px !important;
+  }
+
+  // ── Pagination ─────────────────────────────────────────────
+  .pagination .page-link {
+    padding: 5px 9px !important;
+    font-size: 12px !important;
+  }
+
+  // ── Modal ──────────────────────────────────────────────────
+  .modal-content {
+    margin: 0.5rem !important;
+    border-radius: 12px !important;
+  }
+
+  .em-delete-modal {
+    padding: 1.25rem !important;
+  }
+
+  // ── Breadcrumb ─────────────────────────────────────────────
+  .d-flex.align-items-center.gap-2[style*="font-size: 13px"] {
+    font-size: 11px !important;
+  }
+
+  // ── Buttons general ────────────────────────────────────────
+  .btn {
+    min-height: 38px;
+  }
+
+  // ── Input group full width ──────────────────────────────────
+  .input-group {
+    width: 100% !important;
+  }
+}
+
+// ── Extra small phones (iPhone SE, Galaxy A series) ───────────
+@media (max-width: 400px) {
+
+  .em-title {
+    font-size: 16px !important;
+  }
+
+  .em-stat-value {
+    font-size: 17px !important;
+  }
+
+  // Stat cards — stack to full width on very small screens
+  .row.g-3 > .col-md-4 {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  .table thead th,
+  .table thead.table-dark th {
+    font-size: 9px !important;
+    padding: 8px 7px !important;
+  }
+
+  .table tbody td {
+    font-size: 11px !important;
+    padding: 8px 7px !important;
+  }
+
+  .em-action-btn {
+    width: 24px !important;
+    height: 24px !important;
+    font-size: 10px !important;
+  }
+
+  canvas {
+    max-height: 180px !important;
+  }
+
+  .page-wrapper .em-card.em-card-glow {
+    padding: 1.25rem !important;
+  }
 }
