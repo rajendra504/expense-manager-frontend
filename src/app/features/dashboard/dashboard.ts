@@ -35,13 +35,15 @@ export class Dashboard implements OnInit, OnDestroy {
   private barChart?: Chart;
 
   ngOnInit() {
-    this.loadMonthlySummary();
     this.incomeService.getSummary().subscribe(res => {
       if (res.success) {
         this.summary = res.data;
         this.isLoading = false;
-        this.cdr.detectChanges(); // force @if(summary) to render canvases NOW
-        setTimeout(() => this.renderDonut(), 0); // then render after DOM updates
+        this.cdr.detectChanges();
+        setTimeout(() => {
+          this.renderDonut();
+          this.loadMonthlySummary(this.selectedMonths);
+        }, 0);
       }
     });
 
