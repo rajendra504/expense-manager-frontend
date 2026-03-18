@@ -1,7 +1,7 @@
 <app-navbar (sidebarToggle)="sidebarOpen = !sidebarOpen"></app-navbar>
 <app-toast-container></app-toast-container>
 
-<div class="em-layout" [class.sidebar-visible]="isLoggedIn()">
+<div class="em-layout" [class.sidebar-visible]="isLoggedIn()" [class.sidebar-collapsed]="!sidebarOpen">
 
   @if (isLoggedIn()) {
   <app-sidebar [isOpen]="sidebarOpen" (closeSidebar)="sidebarOpen = false">

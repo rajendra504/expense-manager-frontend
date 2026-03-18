@@ -42,7 +42,7 @@ export class Login {
         if(response.success){
           const token = response.data.token;
           const role = response.data.role;
-          this.authService.storeAuthData(token,role);
+          this.authService.storeAuthData(token,role,request.email);
           this.router.navigate(['/dashboard']);
           console.log('Login successful');
           console.log(response);

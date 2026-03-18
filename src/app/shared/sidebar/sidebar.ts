@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../auth/auth-service';
 
 @Component({
@@ -14,22 +14,20 @@ export class Sidebar {
   @Output() closeSidebar = new EventEmitter<void>();
 
   private authService = inject(AuthService);
+  private router = inject(Router);
 
-  isLoggedIn(): boolean {
-    return this.authService.isAuthenticated();
-  }
+  isLoggedIn(): boolean { return this.authService.isAuthenticated(); }
+  isAdmin(): boolean { return this.authService.isAdmin?.() ?? false; }
 
-  isAdmin(): boolean {
-    return this.authService.isAdmin?.() ?? false;
-  }
-
-  close(): void {
-    this.closeSidebar.emit();
-  }
+  close(): void { this.closeSidebar.emit(); }
 
   closeOnMobile(): void {
-    if (window.innerWidth < 992) {
-      this.close();
-    }
+    if (window.innerWidth < 992) this.close();
+  }
+
+  logout(): void {
+    this.authService.logout();
+    this.router.navigate(['/login']);
+    this.close();
   }
 }

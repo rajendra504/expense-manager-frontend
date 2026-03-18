@@ -1076,3 +1076,44 @@ ngb-toast,
     width: 100% !important;
   }
 }
+
+
+// ── Sidebar spacer + logout ───────────────────────────────────
+.em-sidebar-spacer {
+  flex: 1;
+  min-height: 1rem;
+}
+
+.em-sidebar-logout {
+  background: rgba(224, 92, 92, 0.08) !important;
+  border: 1px solid rgba(224, 92, 92, 0.2) !important;
+  color: var(--accent-red) !important;
+  border-radius: 8px !important;
+  cursor: pointer;
+  text-align: left;
+
+  i { color: var(--accent-red) !important; }
+
+  &:hover {
+    background: rgba(224, 92, 92, 0.15) !important;
+    border-color: rgba(224, 92, 92, 0.35) !important;
+  }
+}
+
+// ── Hamburger always visible when logged in ───────────────────
+// On desktop, clicking it collapses/expands the sidebar
+@media (min-width: 992px) {
+  .em-topbar-hamburger {
+    display: flex !important;
+  }
+
+  // When sidebar is toggled closed on desktop
+  .em-layout.sidebar-visible.sidebar-collapsed .em-main-content {
+    margin-left: 0 !important;
+    width: 100% !important;
+  }
+
+  .em-layout.sidebar-visible.sidebar-collapsed .em-sidebar {
+    transform: translateX(-100%);
+  }
+}

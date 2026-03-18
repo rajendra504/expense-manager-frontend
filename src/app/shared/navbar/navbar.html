@@ -1,8 +1,11 @@
 <nav class="em-topbar">
-  <!-- Hamburger — mobile only -->
-  <button class="em-topbar-hamburger d-lg-none" (click)="toggleSidebar()">
+
+  <!-- Hamburger — always visible when logged in, hides sidebar on desktop via CSS -->
+  @if (isLoggedIn()) {
+  <button aria-label="navbar" class="em-topbar-hamburger" (click)="toggleSidebar()">
     <i class="bi bi-list"></i>
   </button>
+  }
 
   <!-- Brand -->
   <span class="em-topbar-brand em-title">
@@ -13,9 +16,15 @@
   <!-- Right side -->
   <div class="em-topbar-right ms-auto d-flex align-items-center gap-3">
     @if (isLoggedIn()) {
-    <!-- User avatar -->
-    <div class="em-topbar-avatar" [title]="userEmail()">
-      {{ userInitial() }}
+    <!-- User avatar + email -->
+    <div class="d-flex align-items-center gap-2">
+      <div class="em-topbar-avatar" [title]="userEmail()">
+        {{ userInitial() }}
+      </div>
+      <span class="d-none d-md-inline" style="font-size: 12px; color: var(--text-secondary); max-width: 160px;
+                 overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+        {{ userEmail() }}
+      </span>
     </div>
     <!-- Logout -->
     <button class="btn btn-outline-danger-em btn-sm px-3" (click)="logout()">
@@ -31,4 +40,5 @@
     </a>
     }
   </div>
+
 </nav>

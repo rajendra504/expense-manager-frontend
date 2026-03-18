@@ -18,7 +18,7 @@ export class App {
   constructor(private particles: ParticlesService) { }
   ngOnInit() { this.particles.init(); }
   private authService = inject(AuthService);
-  sidebarOpen = false;
+  sidebarOpen = true;
 
   isLoggedIn(): boolean {
     return this.authService.isAuthenticated();

@@ -34,9 +34,10 @@ export class AuthService {
     );
   }
 
-  storeAuthData(token:string,role:string):void{
+  storeAuthData(token:string,role:string,email:string):void{
     localStorage.setItem(this.TOKEN_KEY,token);
     localStorage.setItem(this.ROLE_KEY,role);
+    localStorage.setItem('userEmail', email);
     console.log("token - "+token);
     console.log(role);
   }
@@ -52,7 +53,7 @@ export class AuthService {
     return this.getRole() === 'ADMIN';
   }
   getEmail(): string {
-    return localStorage.getItem('email') ?? '';
+    return localStorage.getItem('userEmail') ?? '';
   }
   isAuthenticated():boolean{
     if(this.getToken()){
