@@ -25,6 +25,7 @@ export class Login {
 
   submitted= false;
   loading= false;
+  showPassword = false;
 
   onSubmit():void{
     this.submitted=true;
@@ -59,6 +60,9 @@ export class Login {
   }
   get f(){
     return this.loginForm.controls;
+  }
+  togglePassword(): void {
+    this.showPassword = !this.showPassword;
   }
   logout():void{
     this.authService.logout();

@@ -2,6 +2,7 @@ export interface ExpenseRequest {
   title: string;
   description?: string;
   amount: number;
+  date: string;
   category: string;
 }
 
@@ -11,6 +12,7 @@ export interface ExpenseResponse {
   description: string;
   amount: number;
   category: string;
+  date?: string;
   userId: number;
 }
 

@@ -4,7 +4,7 @@
   <form [formGroup]="addForm" (ngSubmit)="onSubmit()">
 
     <!-- Page header -->
-    <div class="d-flex align-items-center gap-3 mb-4 em-fade-in-up">
+    <!-- <div class="d-flex align-items-center gap-3 mb-4 em-fade-in-up">
       <button type="button" routerLink="/expenses" class="btn btn-outline-secondary btn-sm"
         style="padding: 6px 14px; font-size: 12px;">
         <i class="bi bi-arrow-left me-1"></i> Back
@@ -13,8 +13,16 @@
         <div class="em-label mb-0">New Record</div>
         <h2 class="em-title" style="font-size: 22px; margin: 0;">Add New Entry</h2>
       </div>
-    </div>
-
+    </div> -->
+<div class="d-flex justify-content-between align-items-start mb-4 em-fade-in-up em-delay-1">
+  <div>
+    <div class="em-label mb-1">New Record</div>
+    <h2 class="em-title" style="font-size: 22px; margin: 0;">Add New Expense</h2>
+  </div>
+  <button type="button" routerLink="/expenses" class="btn btn-outline-secondary btn-sm">
+    <i class="bi bi-arrow-left me-1"></i> Back
+  </button>
+</div>
     <!-- Centered card — uses full width, max 900px, centered with auto margins -->
     <div class="em-card em-card-glow em-fade-in-up em-delay-1"
       style="padding: 2rem; width: 100%; max-width: 900px; margin: 0 auto;">
@@ -47,7 +55,7 @@
         </div>
 
         <!-- Amount -->
-        <div class="col-md-4">
+        <div class="col-md-6">
           <label for="amount" class="form-label">Amount</label>
           <div class="input-group">
             <span class="input-group-text">₹</span>
@@ -61,9 +69,19 @@
           </div>
           }
         </div>
-
+        <!-- Date -->
+        <div class="col-md-6">
+          <label for="date" class="form-label">Date</label>
+          <input type="date" formControlName="date" id="date" class="form-control"
+            [class.is-invalid]="submitted && f['date'].errors" />
+          @if (submitted && f['date'].errors) {
+          <div style="color: #e05c5c; font-size: 12px; margin-top: 4px;">
+            @if (f['date'].errors['required']) { <span>Date is required</span> }
+          </div>
+          }
+        </div>
         <!-- Description -->
-        <div class="col-md-8">
+        <div class="col-12">
           <label for="description" class="form-label">
             Description
             <span

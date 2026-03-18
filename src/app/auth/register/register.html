@@ -15,32 +15,46 @@
 
     <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
 
-      <!-- Email -->
-      <div class="mb-3 em-fade-in-up em-delay-1">
-        <label for="email" class="form-label">Email</label>
+    <!-- Email -->
+    <div class="mb-3 em-fade-in-up em-delay-1">
+      <label for="email" class="form-label">Email</label>
+      <div class="input-group">
+        <span class="input-group-text">
+          <i class="bi bi-person" style="color: rgba(255,255,255,0.4);"></i>
+        </span>
         <input class="form-control" formControlName="email" id="email" type="email" placeholder="you@expense.com"
           [class.is-invalid]="submitted && f['email'].invalid" />
-        @if (submitted && f['email'].errors) {
-        <div class="invalid-feedback d-block" style="color: #e05c5c; font-size: 12px; margin-top: 4px;">
-          @if (f['email'].errors['required']) { Email is required. }
-          @if (f['email'].errors['email']) { Invalid email format. }
-        </div>
-        }
       </div>
-
-      <!-- Password -->
-      <div class="mb-4 em-fade-in-up em-delay-2">
-        <label for="password" class="form-label">Password</label>
-        <input class="form-control" formControlName="password" id="password" type="password"
-          placeholder="Min. 6 characters" [class.is-invalid]="submitted && f['password'].invalid" />
-        @if (submitted && f['password'].errors) {
-        <div class="invalid-feedback d-block" style="color: #e05c5c; font-size: 12px; margin-top: 4px;">
-          @if (f['password'].errors['required']) { Password is required. }
-          @if (f['password'].errors['minlength']) { Minimum 6 characters required. }
-        </div>
-        }
+      @if (submitted && f['email'].errors) {
+      <div class="invalid-feedback d-block" style="color: #e05c5c; font-size: 12px; margin-top: 4px;">
+        @if (f['email'].errors['required']) { Email is required. }
+        @if (f['email'].errors['email']) { Invalid email format. }
       </div>
-
+      }
+    </div>
+<!-- Password -->
+<div class="mb-4 em-fade-in-up em-delay-2">
+  <label for="password" class="form-label">Password</label>
+  <div class="input-group">
+    <span class="input-group-text">
+      <i class="bi bi-lock" style="color: rgba(255,255,255,0.4);"></i>
+    </span>
+    <input class="form-control" formControlName="password" id="password" [type]="showPassword ? 'text' : 'password'"
+      placeholder="Min. 6 characters" [class.is-invalid]="submitted && f['password'].invalid"
+      style="padding-right: 2.8rem;" />
+    <button aria-label="password" type="button" (click)="togglePassword()" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); z-index: 5;
+             background: none; border: none; padding: 0; cursor: pointer; line-height: 1;">
+      <i [class]="showPassword ? 'bi bi-eye-slash' : 'bi bi-eye'"
+        style="color: rgba(255,255,255,0.4); font-size: 15px;"></i>
+    </button>
+  </div>
+  @if (submitted && f['password'].errors) {
+  <div class="invalid-feedback d-block" style="color: #e05c5c; font-size: 12px; margin-top: 4px;">
+    @if (f['password'].errors['required']) { Password is required. }
+    @if (f['password'].errors['minlength']) { Minimum 6 characters required. }
+  </div>
+  }
+</div>
       <!-- Submit -->
       <button type="submit" class="btn btn-primary w-100 em-fade-in-up em-delay-3" [disabled]="loading">
         @if (loading) {

@@ -87,7 +87,35 @@
   </div>
 
 </div>
+<!-- Monthly trend chart -->
+<div class="em-card em-card-glow em-fade-in-up em-delay-3" style="padding: 1.5rem; margin-top: 1rem;">
 
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <div class="em-label">
+      <i class="bi bi-graph-up me-1"></i>Monthly Income vs Expenses
+    </div>
+    <!-- Month range selector -->
+    <div class="d-flex gap-2">
+      @for (opt of [3, 6, 12]; track opt) {
+      <button class="btn btn-sm" [class.btn-outline-primary]="selectedMonths !== opt"
+        [class.btn-primary]="selectedMonths === opt" (click)="onMonthsChange(opt)"
+        style="font-size: 11px; padding: 3px 10px;">
+        {{ opt }}M
+      </button>
+      }
+    </div>
+  </div>
+
+  @if (monthlySummary.length > 0) {
+  <canvas #lineChart></canvas>
+  } @else {
+  <div class="text-center py-4" style="color: var(--text-muted); font-size: 13px;">
+    <div class="spinner-border spinner-border-sm me-2" style="color: var(--gold);"></div>
+    Loading monthly data...
+  </div>
+  }
+
+</div>
   <!-- Quick links -->
   <div class="row g-3 mt-1 em-fade-in-up em-delay-3">
     <div class="col-md-6">

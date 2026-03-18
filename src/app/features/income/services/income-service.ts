@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ApiResponse } from '../../../core/models/api-response';
-import { FinancialSummaryResponse, IncomeRequest, IncomeResponse, Page } from '../income.model';
+import { FinancialSummaryResponse, IncomeRequest, IncomeResponse, MonthlySummaryResponse, Page } from '../income.model';
 
 
 @Injectable({ providedIn: 'root' })
@@ -33,5 +33,11 @@ export class IncomeService {
 
   getSummary(): Observable<ApiResponse<FinancialSummaryResponse>> {
     return this.http.get<ApiResponse<FinancialSummaryResponse>>(`${this.BASE_URL}/summary`);
+  }
+  getMonthlySummary(months: number = 6): Observable<ApiResponse<MonthlySummaryResponse[]>> {
+    return this.http.get<ApiResponse<MonthlySummaryResponse[]>>(
+      `${this.BASE_URL}/monthly-summary`,
+      { params: { months: months.toString() } }
+    );
   }
 }

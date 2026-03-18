@@ -27,3 +27,10 @@ export interface Page<T> {
   number: number;
   size: number;
 }
+
+export interface MonthlySummaryResponse {
+  year: number;
+  month: number;
+  totalIncome: number;
+  totalExpense: number;
+}

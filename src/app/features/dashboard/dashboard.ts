@@ -1,7 +1,7 @@
 import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { IncomeService } from '../income/services/income-service';
 import { ExpenseService } from '../expense/services/expense-service';
-import { FinancialSummaryResponse } from '../income/income.model';
+import { FinancialSummaryResponse, MonthlySummaryResponse } from '../income/income.model';
 import { Chart, registerables } from 'chart.js';
 import { CommonModule, CurrencyPipe } from '@angular/common';
 import { RouterModule } from '@angular/router';
@@ -21,7 +21,11 @@ export class Dashboard implements OnInit, OnDestroy {
 
   @ViewChild('donutChart') donutChartRef!: ElementRef<HTMLCanvasElement>;
   @ViewChild('barChart') barChartRef!: ElementRef<HTMLCanvasElement>;
+  @ViewChild('lineChart') lineChartRef!: ElementRef<HTMLCanvasElement>;
 
+  monthlySummary: MonthlySummaryResponse[] = [];
+  selectedMonths = 6;
+  private lineChart?: Chart;
   summary: FinancialSummaryResponse | null = null;
   categoryTotals: { category: string; total: number }[] = [];
   isLoading = true;
@@ -31,6 +35,7 @@ export class Dashboard implements OnInit, OnDestroy {
   private barChart?: Chart;
 
   ngOnInit() {
+    this.loadMonthlySummary();
     this.incomeService.getSummary().subscribe(res => {
       if (res.success) {
         this.summary = res.data;
@@ -153,8 +158,108 @@ export class Dashboard implements OnInit, OnDestroy {
     });
   }
 
+
+
+loadMonthlySummary(months: number = 6) {
+  this.incomeService.getMonthlySummary(months).subscribe(res => {
+    if (res.success) {
+      this.monthlySummary = res.data;
+      this.cdr.detectChanges();
+      setTimeout(() => this.renderLineChart(), 0);
+    }
+  });
+}
+
+onMonthsChange(months: number) {
+  this.selectedMonths = months;
+  this.lineChart?.destroy();
+  this.loadMonthlySummary(months);
+}
+
+private renderLineChart() {
+  const canvas = this.lineChartRef?.nativeElement;
+  if (!canvas || this.monthlySummary.length === 0) return;
+
+  const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+    'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+  const labels = this.monthlySummary.map(
+    m => `${monthNames[m.month - 1]} ${m.year}`
+  );
+
+  this.lineChart?.destroy();
+  this.lineChart = new Chart(canvas, {
+    type: 'line',
+    data: {
+      labels,
+      datasets: [
+        {
+          label: 'Income',
+          data: this.monthlySummary.map(m => Number(m.totalIncome)),
+          borderColor: '#2dd4a0',
+          backgroundColor: 'rgba(45, 212, 160, 0.08)',
+          borderWidth: 2,
+          pointBackgroundColor: '#2dd4a0',
+          pointRadius: 4,
+          pointHoverRadius: 6,
+          tension: 0.4,
+          fill: true
+        },
+        {
+          label: 'Expenses',
+          data: this.monthlySummary.map(m => Number(m.totalExpense)),
+          borderColor: '#e05c5c',
+          backgroundColor: 'rgba(224, 92, 92, 0.08)',
+          borderWidth: 2,
+          pointBackgroundColor: '#e05c5c',
+          pointRadius: 4,
+          pointHoverRadius: 6,
+          tension: 0.4,
+          fill: true
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: true,
+      interaction: { mode: 'index', intersect: false },
+      plugins: {
+        legend: {
+          position: 'top',
+          labels: {
+            color: 'rgba(255,255,255,0.6)',
+            usePointStyle: true,
+            pointStyleWidth: 8,
+            font: { size: 12 }
+          }
+        },
+        tooltip: {
+          callbacks: {
+            label: (ctx) =>
+              ` ${ctx.dataset.label}: ₹${Number(ctx.parsed.y).toLocaleString('en-IN')}`
+          }
+        }
+      },
+      scales: {
+        x: {
+          ticks: { color: 'rgba(255,255,255,0.5)', font: { size: 11 } },
+          grid: { color: 'rgba(255,255,255,0.05)' }
+        },
+        y: {
+          ticks: {
+            color: 'rgba(255,255,255,0.5)',
+            font: { size: 11 },
+            callback: (val) => '₹' + Number(val).toLocaleString('en-IN')
+          },
+          grid: { color: 'rgba(255,255,255,0.06)' }
+        }
+      }
+    }
+  });
+}
   ngOnDestroy() {
     this.donutChart?.destroy();
     this.barChart?.destroy();
+    this.lineChart?.destroy();
   }
 }

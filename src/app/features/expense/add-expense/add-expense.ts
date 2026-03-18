@@ -23,7 +23,8 @@ export class AddExpense {
     title:['',[Validators.required,Validators.minLength(3),Validators.maxLength(50)]],
     description:['',[Validators.minLength(6),Validators.maxLength(500)]],
     amount:[0,[Validators.required,Validators.min(0)]],
-    category:['',[Validators.required,Validators.min(3)]]
+    category:['',[Validators.required,Validators.min(3)]],
+    date: ['', [Validators.required]]
   });
 
   onSubmit():void{
@@ -38,7 +39,8 @@ export class AddExpense {
       title: this.addForm.value.title ?? '',
       amount: this.addForm.value.amount ?? 0,
       category: this.addForm.value.category ?? '',
-      description: this.addForm.value.description ?? undefined
+      description: this.addForm.value.description ?? undefined,
+      date: this.addForm.value.date ?? ''
     };
     this.expenseService.createExpense(payload).subscribe({
       next:(response)=>{

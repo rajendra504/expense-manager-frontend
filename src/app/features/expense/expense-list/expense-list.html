@@ -67,7 +67,8 @@
           <th (click)="onSort('title')" style="cursor:pointer;" class="user-select-none">Title</th>
           <th (click)="onSort('amount')" style="cursor:pointer;" class="user-select-none">Amount</th>
           <th (click)="onSort('category')" style="cursor:pointer;" class="user-select-none">Category</th>
-          <th class="user-select-none text-center">Action</th>
+          <th (click)="onSort('date')" style="cursor:pointer;" class="user-select-none">Date</th>
+          <th class="user-select-none text-center">Actions</th>
         </tr>
       </thead>
       <tbody>
@@ -76,6 +77,9 @@
           <td>{{ expense.title }}</td>
           <td class="fw-bold">{{ expense.amount | currency:'INR' }}</td>
           <td><span class="badge bg-info text-dark">{{ expense.category }}</span></td>
+          <td style="color: var(--text-secondary); font-size: 13px;">
+            {{ expense.date ? (expense.date | date:'dd MMM yyyy') : '—' }}
+          </td>
       <td>
         <div class="d-flex gap-2 justify-content-evenly">
 
@@ -99,7 +103,7 @@
         </tr>
         } @empty {
         <tr>
-          <td colspan="4" class="text-center py-5"
+          <td colspan="5" class="text-center py-5"
             style="color: rgba(255,255,255,0.3); font-size: 14px; letter-spacing: 0.5px; background-color: rgba(13,21,38,0.85) !important;">
             <i class="bi bi-inbox me-2"></i>No expenses found matching your criteria.
           </td>

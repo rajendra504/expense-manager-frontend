@@ -25,7 +25,8 @@ export class EditExpense implements OnInit{
     title: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
     description: ['', [Validators.minLength(6), Validators.maxLength(500)]],
     amount: [0, [Validators.required, Validators.min(0)]],
-    category: ['', [Validators.required, Validators.min(3)]]
+    category: ['', [Validators.required, Validators.min(3)]],
+    date: ['', [Validators.required]]
   });
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id');
@@ -60,7 +61,8 @@ export class EditExpense implements OnInit{
       title: this.editForm.value.title ?? '',
       amount: this.editForm.value.amount ?? 0,
       category: this.editForm.value.category ?? '',
-      description: this.editForm.value.description ?? undefined
+      description: this.editForm.value.description ?? undefined,
+      date: this.editForm.value.date ?? ''
     };
     this.expenseService.updateExpenseById(this.expenseId,payload).subscribe({
       next: (response) => {

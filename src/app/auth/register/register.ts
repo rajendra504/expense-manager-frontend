@@ -21,6 +21,7 @@ export class Register {
   });
   submitted = false;
   loading = false;
+  showPassword = false;
 
   onSubmit():void{
     this.submitted = true;
@@ -44,6 +45,9 @@ export class Register {
         this.loading=false;
       }
     });
+  }
+  togglePassword(): void {
+    this.showPassword = !this.showPassword;
   }
   get f(){
     return this.registerForm.controls;
