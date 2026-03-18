@@ -1,0 +1,64 @@
+<!-- Overlay — mobile only -->
+<div class="em-sidebar-overlay d-lg-none" [class.active]="isOpen" (click)="close()">
+</div>
+
+<!-- Sidebar -->
+<aside class="em-sidebar" [class.open]="isOpen">
+
+  <!-- Close button — mobile only -->
+  <button type="button" aria-label="sidebar" class="em-sidebar-close d-lg-none" (click)="close()">
+    <i class="bi bi-x-lg"></i>
+  </button>
+
+  @if (isLoggedIn()) {
+
+  <!-- MAIN -->
+  <div class="em-sidebar-section-label">Main</div>
+
+  <a routerLink="/dashboard" class="em-sidebar-link" routerLinkActive="active" (click)="closeOnMobile()">
+    <i class="bi bi-speedometer2"></i>
+    <span>Dashboard</span>
+  </a>
+
+  <!-- EXPENSES -->
+  <div class="em-sidebar-section-label">Expenses</div>
+
+  <a routerLink="/expenses" class="em-sidebar-link" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
+    (click)="closeOnMobile()">
+    <i class="bi bi-receipt"></i>
+    <span>All Expenses</span>
+  </a>
+
+  <a routerLink="/expenses/add" class="em-sidebar-link em-sidebar-link--nested" routerLinkActive="active"
+    (click)="closeOnMobile()">
+    <i class="bi bi-plus-circle"></i>
+    <span>Add Expense</span>
+  </a>
+
+  <!-- INCOME -->
+  <div class="em-sidebar-section-label">Income</div>
+
+  <a routerLink="/income" class="em-sidebar-link" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
+    (click)="closeOnMobile()">
+    <i class="bi bi-cash-stack"></i>
+    <span>All Income</span>
+  </a>
+
+  <a routerLink="/income/add" class="em-sidebar-link em-sidebar-link--nested" routerLinkActive="active"
+    (click)="closeOnMobile()">
+    <i class="bi bi-plus-circle"></i>
+    <span>Add Income</span>
+  </a>
+
+  <!-- ADMIN -->
+  @if (isAdmin()) {
+  <div class="em-sidebar-section-label">Admin</div>
+  <a routerLink="/admin" class="em-sidebar-link" routerLinkActive="active" (click)="closeOnMobile()">
+    <i class="bi bi-shield-check"></i>
+    <span>Admin Panel</span>
+  </a>
+  }
+
+  }
+
+</aside>

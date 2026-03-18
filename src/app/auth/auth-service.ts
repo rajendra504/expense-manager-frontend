@@ -51,6 +51,9 @@ export class AuthService {
   isAdmin(): boolean {
     return this.getRole() === 'ADMIN';
   }
+  getEmail(): string {
+    return localStorage.getItem('email') ?? '';
+  }
   isAuthenticated():boolean{
     if(this.getToken()){
       return true;
