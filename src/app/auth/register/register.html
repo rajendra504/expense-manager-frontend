@@ -28,7 +28,7 @@
       @if (submitted && f['email'].errors) {
       <div class="invalid-feedback d-block" style="color: #e05c5c; font-size: 12px; margin-top: 4px;">
         @if (f['email'].errors['required']) { Email is required. }
-        @if (f['email'].errors['email']) { Invalid email format. }
+        @if (f['email'].errors['pattern']) { Enter a valid email address (e.g. name@example.com) }
       </div>
       }
     </div>
@@ -48,12 +48,6 @@
         style="color: rgba(255,255,255,0.4); font-size: 15px;"></i>
     </button>
   </div>
-  <!-- @if (submitted && f['password'].errors) {
-  <div class="invalid-feedback d-block" style="color: #e05c5c; font-size: 12px; margin-top: 4px;">
-    @if (f['password'].errors['required']) { Password is required. }
-    @if (f['password'].errors['minlength']) { Minimum 6 characters required. }
-  </div>
-  } -->
   @if (submitted && f['password'].errors) {
   <div class="invalid-feedback d-block" style="color: #e05c5c; font-size: 12px; margin-top: 4px;">
     @if (f['password'].errors['required']) { Password is required. }
