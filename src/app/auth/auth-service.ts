@@ -33,7 +33,19 @@ export class AuthService {
       request
     );
   }
+  forgotPassword(email: string): Observable<ApiResponse<void>> {
+    return this.http.post<ApiResponse<void>>(
+      `${this.BASE_URL}/forgot-password`,
+      { email }
+    );
+  }
 
+  resetPassword(email: string, otp: string, newPassword: string): Observable<ApiResponse<void>> {
+    return this.http.post<ApiResponse<void>>(
+      `${this.BASE_URL}/reset-password`,
+      { email, otp, newPassword }
+    );
+  }
   storeAuthData(token:string,role:string,email:string):void{
     localStorage.setItem(this.TOKEN_KEY,token);
     localStorage.setItem(this.ROLE_KEY,role);
