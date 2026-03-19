@@ -42,7 +42,7 @@ export class Register {
     this.authService.register(request).subscribe({
       next:(response)=>{
         if(response.success){
-          // alert('User Registration sucessfull, Please Login');
+          this.toastService.success("User Registered Successfully!");
           console.log(response);
           this.router.navigate(['/login']);
         }
