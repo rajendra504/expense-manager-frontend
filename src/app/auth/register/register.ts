@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { AuthService } from '../auth-service';
 import { Router, RouterModule } from '@angular/router';
 import { NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { ToastService } from '../../core/services/toast-service';
 
 @Component({
   selector: 'app-register',
@@ -14,10 +15,15 @@ export class Register {
   private fb = inject(NonNullableFormBuilder);
   private authService = inject(AuthService);
   private router = inject(Router);
+  private toastService = inject(ToastService);
 
   registerForm = this.fb.group({
-    email:['',[Validators.required,Validators.email]],
-    password:['',[Validators.required,Validators.minLength(6)]]
+    email: ['', [Validators.required, Validators.email]],
+    password: ['', [
+      Validators.required,
+      Validators.minLength(8),
+      Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/)
+    ]]
   });
   submitted = false;
   loading = false;
@@ -40,9 +46,10 @@ export class Register {
         }
         this.loading=false;
       },
-      error:(err)=>{
-        console.log(err);
-        this.loading=false;
+      error: (err) => {
+        const msg = err?.error?.message || 'Registration failed. Please try again.';
+        this.toastService.error(msg);
+        this.loading = false;
       }
     });
   }
