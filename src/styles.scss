@@ -474,20 +474,32 @@ ngb-toast,
   min-width: 0 !important;
   max-width: 100% !important;
 
-  .toast-header {
+  // .toast-header {
+  //   background-color: transparent !important;
+  //   border-bottom: 1px solid rgba(255, 255, 255, 0.07) !important;
+  //   color: var(--text-primary) !important;
+  //   padding: 8px 12px !important;
+  // }
+
+  // .toast-body {
+  //   background-color: transparent !important;
+  //   color: rgba(255, 255, 255, 0.55) !important;
+  //   font-size: 12px !important;
+  //   padding: 8px 12px !important;
+  // }
+.toast-header {
     background-color: transparent !important;
     border-bottom: 1px solid rgba(255, 255, 255, 0.07) !important;
     color: var(--text-primary) !important;
-    padding: 8px 12px !important;
+    padding: 6px 10px !important;  // reduced from 8px 12px
   }
 
   .toast-body {
     background-color: transparent !important;
     color: rgba(255, 255, 255, 0.55) !important;
     font-size: 12px !important;
-    padding: 8px 12px !important;
+    padding: 5px 10px 8px !important;  // reduced from 8px 12px
   }
-
   &.bg-success,
   &.bg-danger,
   &.bg-warning,
